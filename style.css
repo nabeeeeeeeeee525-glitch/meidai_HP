@@ -1,0 +1,219 @@
+body {
+  background-color: #ffffff;
+  background-image: url("bg_satomeidai.png");
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+/* 全体 */
+.page-wrapper {
+  width: 760px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-left: 2px solid #000000;
+  border-right: 2px solid #000000;
+  min-height: 100vh;
+}
+
+/* ヘッダー */
+.header {
+  background-color: #0080ff;
+  color: #ffffff;
+  text-align: center;
+  padding: 10px 0;
+  border-bottom: 2px solid #000000;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.header p {
+  margin: 4px 0 0;
+  font-size: 12px;
+}
+
+/* 2カラム */
+.main-layout {
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.left-column,
+.right-column {
+  display: table-cell;
+  vertical-align: top;
+  padding: 10px;
+}
+
+.left-column {
+  width: 260px;
+  border-right: 2px solid #000000;
+}
+
+/* プロフィール */
+.profile-box {
+  border: 2px solid #000000;
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.profile-box .photo {
+  width: 200px;
+  height: 250px;
+  margin: 0 auto 8px;
+  border: 1px solid #000000;
+  background-color: #c0c0c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-box p {
+  margin: 2px 0;
+  font-size: 12px;
+}
+
+/* メニュー */
+.menu-box {
+  border: 2px solid #000000;
+  margin-top: 8px;
+}
+
+.menu-title {
+  background-color: #000080;
+  color: #ffffff;
+  text-align: center;
+  padding: 4px 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 4px 4px 4px 16px;
+  font-size: 13px;
+}
+
+.menu-list li {
+  margin: 3px 0;
+}
+
+.menu-list a {
+  color: #0000ff;
+  text-decoration: underline;
+}
+
+/* コンテンツ */
+.content-section {
+  border: 2px solid #000000;
+  margin-bottom: 10px;
+}
+
+.content-title {
+  background-color: #000080;
+  color: #ffffff;
+  padding: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.content-body {
+  padding: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* テーブル */
+.update-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.update-table th,
+.update-table td {
+  border: 1px solid #000000;
+  padding: 3px 4px;
+}
+
+.update-table th {
+  background-color: #c0c0ff;
+}
+
+/* フッター */
+.footer {
+  text-align: center;
+  font-size: 11px;
+  padding: 8px 0 16px;
+  border-top: 2px solid #000000;
+  margin-top: 10px;
+}
+
+/* ピコピコリンク */
+.piko-link {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 20px;
+  color: #ffeb3b;
+  text-shadow: 0 0 4px #ff0000, 0 0 8px #ff0000;
+  text-decoration: none;
+  animation: piko 0.8s steps(2, jump-none) infinite,
+             bounce 0.6s ease-in-out infinite alternate;
+}
+
+@keyframes piko {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+/* スマホ対応 */
+@media screen and (max-width: 600px) {
+
+  .header h1 {
+    font-size: 20px;
+    white-space: nowrap;
+  }
+
+  .page-wrapper {
+    width: 100%;
+    border-left: none;
+    border-right: none;
+  }
+
+  .main-layout {
+    display: block;
+  }
+
+  .left-column,
+  .right-column {
+    display: block;
+    width: 100%;
+    border-right: none;
+  }
+
+  .profile-box .photo img {
+    width: 100%;
+    height: auto;
+  }
+
+  .update-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  body {
+    font-size: 16px;
+  }
+}

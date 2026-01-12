@@ -1,259 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <!-- OGP設定 -->
   <meta property="og:title" content="さとうめいだいのホームページ">
   <meta property="og:description" content="めいだいと触れ合えるミニゲームやプロフィールなどを掲載しています。">
-  <meta property="og:image" content="https://nabeeeeeeeeee525-glitch.github.io/meidai_HP/home.png">
+  <meta property="og:image" content="https://nabeeeeeeeeee525-glitch.github.io/meidai_HP/image/home.png">
   <meta property="og:url" content="https://nabeeeeeeeeee525-glitch.github.io/meidai_HP/">
   <meta property="og:type" content="website">
 
-  <!-- Twitterカード（任意） -->
+  <!-- Twitterカード -->
   <meta name="twitter:card" content="summary_large_image">
- 
-  <!-- タブアイコン --> 
-  <link rel="icon" href="home.png">
-  <meta charset="UTF-8">
+
+  <!-- タブアイコン -->
+  <link rel="icon" href="image/home.png">
+
+  <!-- 外部CSS -->
+  <link rel="stylesheet" href="style.css">
+
   <title>佐藤めいだいのホームページ</title>
-  <style>
-    body {
-       background-color: #ffffff;
-       background-image: url("bg_satomeidai.png");
-       background-repeat: repeat;
-       background-attachment: fixed;
-    }
-
-    /* 全体を中央寄せにするためのラッパー */
-    .page-wrapper {
-      width: 760px;
-      margin: 0 auto;
-      background-color: #ffffff;
-      border-left: 2px solid #000000;
-      border-right: 2px solid #000000;
-      min-height: 100vh;
-    }
-
-    /* 上部のタイトル部分 */
-    .header {
-      background-color: #0080ff;
-      color: #ffffff;
-      text-align: center;
-      padding: 10px 0;
-      border-bottom: 2px solid #000000;
-    }
-
-    .header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    .header p {
-      margin: 4px 0 0;
-      font-size: 12px;
-    }
-
-    /* メイン部分を左右2カラムに */
-    .main-layout {
-      display: table;
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .left-column,
-    .right-column {
-      display: table-cell;
-      vertical-align: top;
-      padding: 10px;
-    }
-
-    .left-column {
-      width: 260px;
-      border-right: 2px solid #000000;
-      background-color: #ffffff;
-    }
-
-    .right-column {
-      background-color: #ffffff;
-    }
-
-    /* 左カラムの写真・プロフィールっぽい枠 */
-    .profile-box {
-      border: 2px solid #000000;
-      padding: 5px;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .profile-box .photo {
-      width: 200px;
-      height: 250px;
-      margin: 0 auto 8px;
-      border: 1px solid #000000;
-      background-color: #c0c0c0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    .profile-box p {
-      margin: 2px 0;
-      font-size: 12px;
-    }
-
-    /* 左カラムのメニュー */
-    .menu-box {
-      border: 2px solid #000000;
-      margin-top: 8px;
-    }
-
-    .menu-title {
-      background-color: #000080;
-      color: #ffffff;
-      text-align: center;
-      padding: 4px 0;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .menu-list {
-      list-style: none;
-      margin: 0;
-      padding: 4px 4px 4px 16px;
-      font-size: 13px;
-    }
-
-    .menu-list li {
-      margin: 3px 0;
-    }
-
-    .menu-list a {
-      color: #0000ff;
-      text-decoration: underline;
-    }
-
-    /* 右カラムのコンテンツ */
-    .content-section {
-      border: 2px solid #000000;
-      margin-bottom: 10px;
-    }
-
-    .content-title {
-      background-color: #000080;
-      color: #ffffff;
-      padding: 4px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    .content-body {
-      padding: 6px;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    .content-body p {
-      margin: 4px 0;
-    }
-
-    /* 一番下の更新情報風テーブル */
-    .update-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 12px;
-    }
-
-    .update-table th,
-    .update-table td {
-      border: 1px solid #000000;
-      padding: 3px 4px;
-    }
-
-    .update-table th {
-      background-color: #c0c0ff;
-    }
-
-    /* フッター */
-    .footer {
-      text-align: center;
-      font-size: 11px;
-      padding: 8px 0 16px;
-      border-top: 2px solid #000000;
-      margin-top: 10px;
-    }
-    /* Maydie_Games */
-    .piko-link {
-      display: inline-block;
-      font-weight: bold;
-      font-size: 20px;
-      color: #ffeb3b;
-      text-shadow: 0 0 4px #ff0000, 0 0 8px #ff0000;
-      text-decoration: none;
-      animation: piko 0.8s steps(2, jump-none) infinite,
-             bounce 0.6s ease-in-out infinite alternate;
-    }
-
-      @keyframes piko {
-      0% { opacity: 1; }
-      50% { opacity: 0.3; }
-      100% { opacity: 1; }
-     }
-
-      @keyframes bounce {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-4px); }
-    }
-
-    /* スマホ用レイアウト（幅600px以下） */
-      @media screen and (max-width: 600px) {
-
-    /* スマホ用に文字を少し小さくする */
-    .header h1 {
-    font-size: 20px;
-    white-space: nowrap;
-    }
-
-    /* ページ全体をスマホ幅に合わせる */
-    .page-wrapper {
-     width: 100%;
-     border-left: none;
-     border-right: none;
-    }
-
-  /* 2カラムを1カラムにする */
-    .main-layout {
-     display: block;
-    }
-
-    .left-column,
-    .right-column {
-     display: block;
-     width: 100%;
-     border-right: none;
-     padding: 10px;
-    }
-
-  /* プロフィール画像をスマホ幅にフィット */
-    .profile-box .photo img {
-     width: 100%;
-     height: auto;
-    }
-
-  /* テーブルを横スクロール可能に */
-    .update-table {
-     display: block;
-     overflow-x: auto;
-     white-space: nowrap;
-    }
-
-  /* 文字サイズを少し大きく */
-    body {
-     font-size: 16px;
-    }
-}
-  </style>
 </head>
+
 <body>
   <div class="page-wrapper">
     <div class="header">
@@ -262,11 +31,12 @@
     </div>
 
     <div class="main-layout">
+
       <!-- 左カラム -->
       <div class="left-column">
         <div class="profile-box">
           <div class="photo">
-            <img src="home.png" alt="佐藤 明大の写真" width="200" height="250">
+            <img src="image/home.png" alt="佐藤 明大の写真" width="200" height="250">
           </div>
           <p>名前：佐藤 明大</p>
           <p>職業：ITインフラ</p>
@@ -288,6 +58,7 @@
 
       <!-- 右カラム -->
       <div class="right-column">
+
         <div id="profile" class="content-section">
           <div class="content-title">プロフィール</div>
           <div class="content-body">
@@ -302,26 +73,10 @@
           <div class="content-body">
             <p>佐藤明大の最近の動向を示しています。</p>
             <table class="update-table">
-              <tr>
-                <th>年</th>
-                <th>項目</th>
-                <th>メモ</th>
-              </tr>
-              <tr>
-                <td>2023年</td>
-                <td>新潟市へ異動</td>
-                <td>長岡市在住</td>
-              </tr>
-              <tr>
-                <td>2021年</td>
-                <td>埼玉県へ異動</td>
-                <td>川口市、大宮区に在住</td>
-              </tr>
-              <tr>
-                <td>2019年</td>
-                <td>入社</td>
-                <td>群馬県高崎市に在住</td>
-              </tr>
+              <tr><th>年</th><th>項目</th><th>メモ</th></tr>
+              <tr><td>2023年</td><td>新潟市へ異動</td><td>長岡市在住</td></tr>
+              <tr><td>2021年</td><td>埼玉県へ異動</td><td>川口市、大宮区に在住</td></tr>
+              <tr><td>2019年</td><td>入社</td><td>群馬県高崎市に在住</td></tr>
             </table>
           </div>
         </div>
@@ -332,7 +87,7 @@
             <p>明大で遊ぼう特設ページ</p>
             <p>
               <a class="piko-link" href="https://nabeeeeeeeeee525-glitch.github.io/maidai_games/" target="_blank">
-              Maydie Games
+                Maydie Games
               </a>
             </p>
             <p>めいだいと触れ合うための簡単なミニゲームを用意しました。</p>
@@ -350,40 +105,25 @@
           </div>
         </div>
 
-<div id="contact" class="content-section">
-  <div class="content-title">お問い合わせ</div>
-  <div class="content-body">
-    <p>ご感想などありましたら、下記Discordアカウントまで連絡お願いいたします。</p>
-    <p>
-      Discord：
-      <a href="https://discordapp.com/users/435086589409099776" target="_blank">
-        ふなちん
-      </a>
-    </p>
-  </div>
-</div>
-
+        <div id="contact" class="content-section">
+          <div class="content-title">お問い合わせ</div>
+          <div class="content-body">
+            <p>ご感想などありましたら、下記Discordアカウントまで連絡お願いいたします。</p>
+            <p>
+              Discord：
+              <a href="https://discordapp.com/users/435086589409099776" target="_blank">ふなちん</a>
+            </p>
+          </div>
+        </div>
 
         <div class="content-section">
           <div class="content-title">更新履歴</div>
           <div class="content-body">
             <table class="update-table">
-              <tr>
-                <th>日付</th>
-                <th>内容</th>
-              </tr>
-              <tr>
-                <td>2026/01/12</td>
-                <td>めいだいホームページを開設しました。</td>
-              </tr>
-              <tr>
-                <td>20XX/01/15</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td>20XX/02/01</td>
-                <td></td>
-              </tr>
+              <tr><th>日付</th><th>内容</th></tr>
+              <tr><td>2026/01/12</td><td>めいだいホームページを開設しました。</td></tr>
+              <tr><td>20XX/01/15</td><td></td></tr>
+              <tr><td>20XX/02/01</td><td></td></tr>
             </table>
           </div>
         </div>
@@ -391,6 +131,7 @@
         <div class="footer">
           Copyright (C) 2025 Funachin All Rights Reserved.
         </div>
+
       </div>
     </div>
   </div>
