@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>○○○○のホームページ</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0080ff; /* 懐かしい青背景 */
+      font-family: "MS PGothic", "MS UI Gothic", sans-serif;
+    }
+
+    /* 全体を中央寄せにするためのラッパー */
+    .page-wrapper {
+      width: 760px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-left: 2px solid #000000;
+      border-right: 2px solid #000000;
+      min-height: 100vh;
+    }
+
+    /* 上部のタイトル部分 */
+    .header {
+      background-color: #0080ff;
+      color: #ffffff;
+      text-align: center;
+      padding: 10px 0;
+      border-bottom: 2px solid #000000;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .header p {
+      margin: 4px 0 0;
+      font-size: 12px;
+    }
+
+    /* メイン部分を左右2カラムに */
+    .main-layout {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .left-column,
+    .right-column {
+      display: table-cell;
+      vertical-align: top;
+      padding: 10px;
+    }
+
+    .left-column {
+      width: 260px;
+      border-right: 2px solid #000000;
+      background-color: #ffffff;
+    }
+
+    .right-column {
+      background-color: #ffffff;
+    }
+
+    /* 左カラムの写真・プロフィールっぽい枠 */
+    .profile-box {
+      border: 2px solid #000000;
+      padding: 5px;
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .profile-box .photo {
+      width: 200px;
+      height: 250px;
+      margin: 0 auto 8px;
+      border: 1px solid #000000;
+      background-color: #c0c0c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .profile-box p {
+      margin: 2px 0;
+      font-size: 12px;
+    }
+
+    /* 左カラムのメニュー */
+    .menu-box {
+      border: 2px solid #000000;
+      margin-top: 8px;
+    }
+
+    .menu-title {
+      background-color: #000080;
+      color: #ffffff;
+      text-align: center;
+      padding: 4px 0;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .menu-list {
+      list-style: none;
+      margin: 0;
+      padding: 4px 4px 4px 16px;
+      font-size: 13px;
+    }
+
+    .menu-list li {
+      margin: 3px 0;
+    }
+
+    .menu-list a {
+      color: #0000ff;
+      text-decoration: underline;
+    }
+
+    /* 右カラムのコンテンツ */
+    .content-section {
+      border: 2px solid #000000;
+      margin-bottom: 10px;
+    }
+
+    .content-title {
+      background-color: #000080;
+      color: #ffffff;
+      padding: 4px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .content-body {
+      padding: 6px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .content-body p {
+      margin: 4px 0;
+    }
+
+    /* 一番下の更新情報風テーブル */
+    .update-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .update-table th,
+    .update-table td {
+      border: 1px solid #000000;
+      padding: 3px 4px;
+    }
+
+    .update-table th {
+      background-color: #c0c0ff;
+    }
+
+    /* フッター */
+    .footer {
+      text-align: center;
+      font-size: 11px;
+      padding: 8px 0 16px;
+      border-top: 2px solid #000000;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="header">
+      <h1>○○○○のホームページ</h1>
+      <p>（個人で運営している、とてもシンプルなホームページです）</p>
+    </div>
+
+    <div class="main-layout">
+      <!-- 左カラム -->
+      <div class="left-column">
+        <div class="profile-box">
+          <div class="photo">
+            写真が入ります
+          </div>
+          <p>名前：○○ ○○</p>
+          <p>職業：俳優（のような人）</p>
+          <p>出身地：○○県</p>
+          <p>趣味：インターネット</p>
+        </div>
+
+        <div class="menu-box">
+          <div class="menu-title">メニュー</div>
+          <ul class="menu-list">
+            <li><a href="#profile">プロフィール</a></li>
+            <li><a href="#works">出演作品</a></li>
+            <li><a href="#diary">日記</a></li>
+            <li><a href="#info">お知らせ</a></li>
+            <li><a href="#contact">メール</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 右カラム -->
+      <div class="right-column">
+        <div id="profile" class="content-section">
+          <div class="content-title">プロフィール</div>
+          <div class="content-body">
+            <p>ここは、管理人○○○○の簡単なプロフィールです。</p>
+            <p>昔ながらのホームページが好きで、自分でもレトロな雰囲気のサイトを作ってみました。</p>
+            <p>最新のデザインではありませんが、できるだけシンプルで見やすいページを目指しています。</p>
+          </div>
+        </div>
+
+        <div id="works" class="content-section">
+          <div class="content-title">出演作品</div>
+          <div class="content-body">
+            <p>※これはサンプルのページです。実在の人物・作品とは関係ありません。</p>
+            <table class="update-table">
+              <tr>
+                <th>年</th>
+                <th>作品名</th>
+                <th>メモ</th>
+              </tr>
+              <tr>
+                <td>20XX年</td>
+                <td>ドラマ「○○○○」</td>
+                <td>連続ドラマ・主演</td>
+              </tr>
+              <tr>
+                <td>20XX年</td>
+                <td>映画「△△△△」</td>
+                <td>準主役</td>
+              </tr>
+              <tr>
+                <td>20XX年</td>
+                <td>舞台「□□□」</td>
+                <td>地方公演など</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div id="diary" class="content-section">
+          <div class="content-title">日記</div>
+          <div class="content-body">
+            <p>20XX年X月X日</p>
+            <p>ホームページを久しぶりに更新しました。昔ながらの雰囲気を残しつつ、少しだけ手を入れています。</p>
+            <p>スマートフォン全盛の時代ですが、たまにはこういうページも悪くないですね。</p>
+          </div>
+        </div>
+
+        <div id="info" class="content-section">
+          <div class="content-title">お知らせ</div>
+          <div class="content-body">
+            <p>・このページは個人によるファンサイト風サンプルです。</p>
+            <p>・実在の人物や事務所等とは一切関係ありません。</p>
+            <p>・HTMLとCSSだけで、シンプルな構成にしています。</p>
+          </div>
+        </div>
+
+        <div id="contact" class="content-section">
+          <div class="content-title">メール</div>
+          <div class="content-body">
+            <p>ご感想などありましたら、下記メールアドレス（※ダミー）までお願いいたします。</p>
+            <p>mail：sample@example.com</p>
+            <p>※実際には送信されません。ご利用の際はご自身のメールアドレスに置き換えてください。</p>
+          </div>
+        </div>
+
+        <div class="content-section">
+          <div class="content-title">更新履歴</div>
+          <div class="content-body">
+            <table class="update-table">
+              <tr>
+                <th>日付</th>
+                <th>内容</th>
+              </tr>
+              <tr>
+                <td>20XX/01/01</td>
+                <td>ホームページを開設しました。</td>
+              </tr>
+              <tr>
+                <td>20XX/01/15</td>
+                <td>出演作品のページを追加しました。</td>
+              </tr>
+              <tr>
+                <td>20XX/02/01</td>
+                <td>日記を更新しました。</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="footer">
+          Copyright (C) 20XX ○○○○ All Rights Reserved.
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
