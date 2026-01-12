@@ -169,6 +169,29 @@
       border-top: 2px solid #000000;
       margin-top: 10px;
     }
+    /* Maydie_Games */
+    .piko-link {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 20px;
+      color: #ffeb3b;
+      text-shadow: 0 0 4px #ff0000, 0 0 8px #ff0000;
+      text-decoration: none;
+      animation: piko 0.8s steps(2, jump-none) infinite,
+             bounce 0.6s ease-in-out infinite alternate;
+    }
+
+      @keyframes piko {
+      0% { opacity: 1; }
+      50% { opacity: 0.3; }
+      100% { opacity: 1; }
+     }
+
+      @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-4px); }
+    }
+
   </style>
 </head>
 <body>
@@ -248,9 +271,9 @@
           <div class="content-body">
             <p>明大で遊ぼう特設ページ</p>
             <p>
-            <a href=https://nabeeeeeeeeee525-glitch.github.io/maidai_games/ target="_blank">
+              <a class="piko-link" href="https://nabeeeeeeeeee525-glitch.github.io/maidai_games/" target="_blank">
               Maydie Games
-            </a>
+              </a>
             </p>
             <p>めいだいと触れ合うための簡単なミニゲームを用意しました。</p>
             <p>めいだいを身近に感じることができます。スマートフォン・PCどちらでも楽しむことができます。</p>
