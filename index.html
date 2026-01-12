@@ -1,139 +1,462 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- OGP設定 -->
-  <meta property="og:title" content="さとうめいだいのホームページ">
-  <meta property="og:description" content="めいだいと触れ合えるミニゲームやプロフィールなどを掲載しています。">
-  <meta property="og:image" content="https://nabeeeeeeeeee525-glitch.github.io/meidai_HP/image/home.png">
-  <meta property="og:url" content="https://nabeeeeeeeeee525-glitch.github.io/meidai_HP/">
+    <!-- OGP設定 -->
+  <meta property="og:title" content="めいだい恐竜ゲーム">
+  <meta property="og:description" content="恐竜めいだいが迫る障害物めいだいを回避するゲーム。※PC推奨">
+  <meta property="og:image" content="https://nabeeeeeeeeee525-glitch.github.io/kyoryu_meidai/image/samune.png">
+  <meta property="og:url" content="https://nabeeeeeeeeee525-glitch.github.io/kyoryu_meidai/">
   <meta property="og:type" content="website">
 
   <!-- Twitterカード -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta charset="UTF-8">
+  <title>めいだい恐竜げーむ</title>
 
-  <!-- タブアイコン -->
-  <link rel="icon" href="image/home.png">
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
-  <!-- 外部CSS -->
-  <link rel="stylesheet" href="style.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f5f5f5;
+      font-family: system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 30px;
+      user-select: none;
+    }
 
-  <title>佐藤めいだいのホームページ</title>
+    .game-container {
+      background-image: url("image/bg.png"); /* ← 画像パス */
+      background-size: cover;          /* ← 枠にぴったり収める */
+      background-position: center;     /* ← 中央に配置 */
+      border: 2px solid #555;
+      width: 800px;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+
+
+    .ground {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 200%;
+      height: 4px;
+      background:#c47a3a;
+    }
+
+    .dino {
+      position: absolute;
+      left: 50px;
+      bottom: 20px;
+      width: 48px;
+      height: 48px;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.3));
+      background-image: url("image/dino.png"); /* ← 画像パス */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .obstacle {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      background-image: url("image/obstacle.png"); /* ← 画像パス */
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+
+    .ui {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      font-size: 16px;
+      color: #333;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px 16px;
+      border-radius: 4px;
+      border: 1px solid #aaa;
+      white-space: pre-line;
+    }
+
+    .jump-btn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background: #333;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 16px;
+      opacity: 0.8;
+      user-select: none;
+    }
+
+    .tweet-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #1d9bf0;
+      color: #fff;
+      border-radius: 4px;
+      display: inline-block;
+      font-size: 14px;
+    }
+
+    /* ▼ ランキングをゲーム枠の外に完全移動 */
+    .ranking {
+      margin-top: 80px;
+      width: 800px;
+      background: rgba(255,255,255,0.95);
+      padding: 15px 20px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+      text-align: center;
+      display: none;
+      position: relative;      /* ← ゲーム枠と完全に独立 */
+      z-index: 1;              /* ← 上に重ならないように */
+    }
+
+    .name-input {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.95);
+      padding: 10px 20px;
+      border-radius: 6px;
+      border: 1px solid #aaa;
+      text-align: center;
+      display: none;
+    }
+  </style>
 </head>
-
 <body>
-  <div class="page-wrapper">
-    <div class="header">
-      <h1>さとうめいだいのホームページ</h1>
-      <p>（個人で運営している、とてもシンプルなホームページです）</p>
+
+  <div class="game-container" id="game">
+    <div class="ground" id="ground"></div>
+    <div class="dino" id="dino"></div>
+
+    <div class="ui">
+      <div>スペース / 上矢印 / タップでジャンプ</div>
+      <div>スコア: <span id="score">0</span></div>
     </div>
 
-    <div class="main-layout">
+    <div class="message" id="message">
+      スペースキーか上矢印キーでスタート
+    </div>
 
-      <!-- 左カラム -->
-      <div class="left-column">
-        <div class="profile-box">
-          <div class="photo">
-            <img src="image/home.png" alt="佐藤 明大の写真" width="200" height="250">
-          </div>
-          <p>名前：佐藤 明大</p>
-          <p>職業：ITインフラ</p>
-          <p>出身地：群馬県T村</p>
-          <p>趣味：料理</p>
-        </div>
+    <div class="jump-btn" id="jumpBtn">ジャンプ</div>
 
-        <div class="menu-box">
-          <div class="menu-title">メニュー</div>
-          <ul class="menu-list">
-            <li><a href="#profile">プロフィール</a></li>
-            <li><a href="#works">最近のめいだい</a></li>
-            <li><a href="#diary">めいだいで遊ぼう</a></li>
-            <li><a href="#info">お知らせ</a></li>
-            <li><a href="#contact">お問い合わせ</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- 右カラム -->
-      <div class="right-column">
-
-        <div id="profile" class="content-section">
-          <div class="content-title">プロフィール</div>
-          <div class="content-body">
-            <p>ここは、管理人ふなちんの簡単なプロフィールです。</p>
-            <p>めいだいという生き物が好きで、野生感あふれる「めいだい」のHPを作ってみました。</p>
-            <p>HTML(Hey Trendy Maydie Lets learning!!)の勉強もかねてChat GPTを頼りに日々勉強を重ねています。</p>
-          </div>
-        </div>
-
-        <div id="works" class="content-section">
-          <div class="content-title">最近のめいだい</div>
-          <div class="content-body">
-            <p>佐藤明大の最近の動向を示しています。</p>
-            <table class="update-table">
-              <tr><th>年</th><th>項目</th><th>メモ</th></tr>
-              <tr><td>2023年</td><td>新潟市へ異動</td><td>長岡市在住</td></tr>
-              <tr><td>2021年</td><td>埼玉県へ異動</td><td>川口市、大宮区に在住</td></tr>
-              <tr><td>2019年</td><td>入社</td><td>群馬県高崎市に在住</td></tr>
-            </table>
-          </div>
-        </div>
-
-        <div id="diary" class="content-section">
-          <div class="content-title">めいだいで遊ぼう</div>
-          <div class="content-body">
-            <p>明大で遊ぼう特設ページ</p>
-            <p>
-              <a class="piko-link" href="https://nabeeeeeeeeee525-glitch.github.io/maidai_games/" target="_blank">
-                Maydie Games
-              </a>
-            </p>
-            <p>めいだいと触れ合うための簡単なミニゲームを用意しました。</p>
-            <p>めいだいを身近に感じることができます。スマートフォン・PCどちらでも楽しむことができます。</p>
-          </div>
-        </div>
-
-        <div id="info" class="content-section">
-          <div class="content-title">お知らせ</div>
-          <div class="content-body">
-            <p>・このページは個人によるファンサイトです。</p>
-            <p>・実在の人物とは大いに関係あります。</p>
-            <p>※佐藤明大のサイトを名乗る偽サイトの報告が寄せられておりますのでご注意ください。</p>
-            <p>※SNS上で佐藤明大を名乗るアカウントがあるといった“なりすまし”の報告が寄せられておりますが、めいだい本人は一切行っておりませんので、ご注意ください</p>
-          </div>
-        </div>
-
-        <div id="contact" class="content-section">
-          <div class="content-title">お問い合わせ</div>
-          <div class="content-body">
-            <p>ご感想などありましたら、下記Discordアカウントまで連絡お願いいたします。</p>
-            <p>
-              Discord：
-              <a href="https://discordapp.com/users/435086589409099776" target="_blank">ふなちん</a>
-            </p>
-          </div>
-        </div>
-
-        <div class="content-section">
-          <div class="content-title">更新履歴</div>
-          <div class="content-body">
-            <table class="update-table">
-              <tr><th>日付</th><th>内容</th></tr>
-              <tr><td>2026/01/12</td><td>めいだいホームページを開設しました。</td></tr>
-              <tr><td>20XX/01/15</td><td></td></tr>
-              <tr><td>20XX/02/01</td><td></td></tr>
-            </table>
-          </div>
-        </div>
-
-        <div class="footer">
-          Copyright (C) 2025 Funachin All Rights Reserved.
-        </div>
-
-      </div>
+    <div class="name-input" id="nameInput">
+      <p>名前を入力してスコアを登録</p>
+      <input type="text" id="playerName" maxlength="12" placeholder="名前">
+      <button id="submitScore">送信</button>
+      <button id="skipScore">スキップ</button>
     </div>
   </div>
+
+  <!-- ▼ ランキングはゲーム枠の外に表示 -->
+  <div class="ranking" id="ranking">
+    <h3>ランキング（上位5名）</h3>
+    <ol id="rankingList"></ol>
+  </div>
+
+  <script>
+    /* ------------------------------
+       Firebase 初期化
+    ------------------------------ */
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJaho67gL9NMw_bBdZwRHvFo5MyyDJZBI",
+      authDomain: "maydie-games.firebaseapp.com",
+      projectId: "maydie-games",
+      storageBucket: "maydie-games.appspot.com",
+      messagingSenderId: "986020331720",
+      appId: "1:986020331720:web:c5f3f9fb1594db2758a5fd",
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    /* ------------------------------
+       ゲーム変数
+    ------------------------------ */
+    const game = document.getElementById('game');
+    const dino = document.getElementById('dino');
+    const scoreEl = document.getElementById('score');
+    const messageEl = document.getElementById('message');
+    const ground = document.getElementById('ground');
+    const jumpBtn = document.getElementById('jumpBtn');
+
+    const gameWidth = 800;
+    const groundY = 20;
+
+    let dinoY = 0;
+    let dinoVY = 0;
+    const gravity = -0.7;
+    const jumpVelocity = 12;
+    let isOnGround = true;
+
+    let obstacles = [];
+    let lastTime = 0;
+    let spawnTimer = 0;
+    let spawnInterval = 1000;
+    let speed = 6;
+    let score = 0;
+    let isRunning = false;
+    let isGameOver = false;
+
+    let speedTimer = 0;
+
+    /* ------------------------------
+       Firestore ランキング処理
+    ------------------------------ */
+    async function saveScore(name, score) {
+      await db.collection("scores").add({
+        name,
+        score,
+        createdAt: Date.now()
+      });
+    }
+
+    async function loadRanking() {
+      const snap = await db.collection("scores")
+        .orderBy("score", "desc")
+        .limit(5)
+        .get();
+
+      const list = document.getElementById("rankingList");
+      list.innerHTML = "";
+
+      snap.forEach(doc => {
+        const data = doc.data();
+        const li = document.createElement("li");
+        li.textContent = `${data.name}：${data.score}`;
+        list.appendChild(li);
+      });
+
+      document.getElementById("ranking").style.display = "block";
+    }
+
+    /* ------------------------------
+       ゲームロジック
+    ------------------------------ */
+    function resetGame() {
+      obstacles.forEach(o => o.el.remove());
+      obstacles = [];
+      dinoY = 0;
+      dinoVY = 0;
+      isOnGround = true;
+      score = 0;
+      speed = 6;
+      spawnTimer = 0;
+      speedTimer = 0;
+      scoreEl.textContent = '0';
+      isGameOver = false;
+
+      messageEl.innerHTML = "スペースキーか上矢印キーでスタート";
+      messageEl.style.display = 'block';
+
+      dino.style.bottom = (groundY + dinoY) + 'px';
+      loadRanking()
+    }
+
+    function startGame() {
+      if (isRunning) return;
+      isRunning = true;
+      messageEl.style.display = 'none';
+      lastTime = performance.now();
+      requestAnimationFrame(loop);
+    }
+
+    function gameOver() {
+      isRunning = false;
+      isGameOver = true;
+
+      const finalScore = Math.floor(score);
+
+      const tweetURL =
+        `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          `めいだい恐竜ゲームのスコアは${finalScore}でした！`
+        )}`;
+
+      messageEl.innerHTML =
+        `ゲームオーバー\nスコア: ${finalScore}\n\n` +
+        `<a class="tweet-btn" href="${tweetURL}" target="_blank">Xで共有</a>\n\n` +
+        `スペースキーでリトライ`;
+
+      messageEl.style.display = 'block';
+
+      document.getElementById("nameInput").style.display = "block";
+
+      document.getElementById("submitScore").onclick = async () => {
+        const name = document.getElementById("playerName").value.trim();
+        if (name === "") return;
+
+        await saveScore(name, finalScore);
+
+        document.getElementById("nameInput").style.display = "none";
+
+        loadRanking();
+      };
+
+      document.getElementById("skipScore").onclick = () => {
+        document.getElementById("nameInput").style.display = "none";
+        resetGame();
+        startGame();
+      };
+    }
+
+    function spawnObstacle() {
+      const el = document.createElement('div');
+      el.className = 'obstacle';
+      game.appendChild(el);
+
+      const type = Math.random();
+
+      let height = 40;
+      let bottom = groundY;
+
+      if (type < 0.33) {
+        height = 40;
+        bottom = groundY;
+      } else if (type < 0.66) {
+        height = 70;
+        bottom = groundY;
+      } else {
+        height = 30;
+        bottom = groundY + 80;
+      }
+
+      el.style.height = height + 'px';
+      el.style.bottom = bottom + 'px';
+
+      const obstacle = {
+        el,
+        x: gameWidth,
+      };
+      el.style.left = obstacle.x + 'px';
+      obstacles.push(obstacle);
+    }
+
+    function update(delta) {
+      const groundOffset = (performance.now() / 5) % gameWidth;
+      ground.style.transform = `translateX(${-groundOffset}px)`;
+
+      score += delta * 0.01;
+      scoreEl.textContent = Math.floor(score);
+
+      speedTimer += delta;
+      if (speedTimer >= 20000) {
+        speedTimer = 0;
+        speed *= 1.1;
+      }
+
+      spawnInterval = 600 + Math.random() * 900;
+
+      dinoVY += gravity;
+      dinoY += dinoVY;
+      if (dinoY < 0) {
+        dinoY = 0;
+        dinoVY = 0;
+        isOnGround = true;
+      }
+      dino.style.bottom = (groundY + dinoY) + 'px';
+
+      obstacles.forEach(o => {
+        o.x -= speed;
+        o.el.style.left = o.x + 'px';
+      });
+
+      obstacles = obstacles.filter(o => {
+        if (o.x + 20 < 0) {
+          o.el.remove();
+          return false;
+        }
+        return true;
+      });
+
+      spawnTimer += delta;
+      if (spawnTimer >= spawnInterval) {
+        spawnTimer = 0;
+        spawnObstacle();
+      }
+
+      const dinoRect = dino.getBoundingClientRect();
+      for (const o of obstacles) {
+        const r = o.el.getBoundingClientRect();
+        const overlapX = dinoRect.right > r.left && dinoRect.left < r.right;
+        const overlapY = dinoRect.bottom > r.top && dinoRect.top < r.bottom;
+        if (overlapX && overlapY) {
+          gameOver();
+          break;
+        }
+      }
+    }
+
+    function loop(time) {
+      if (!isRunning) return;
+      const delta = time - lastTime;
+      lastTime = time;
+      update(delta);
+      requestAnimationFrame(loop);
+    }
+
+    function handleJump() {
+      if (!isRunning && !isGameOver) {
+        startGame();
+      } else if (isGameOver) {
+        resetGame();
+        startGame();
+      } else {
+        if (isOnGround) {
+          dinoVY = jumpVelocity;
+          isOnGround = false;
+        }
+      }
+    }
+    
+    window.addEventListener('keydown', (e) => {
+  if (e.code === 'Space' || e.code === 'ArrowUp') {
+    e.preventDefault();
+
+    const nameInputVisible = document.getElementById("nameInput").style.display === "block";
+
+    if (nameInputVisible) {
+      // スコア登録画面が出てる → スキップ処理
+      document.getElementById("nameInput").style.display = "none";
+      resetGame();
+      startGame();
+    } else {
+      // 通常のジャンプ処理
+      handleJump();
+    }
+  }
+});
+
+    jumpBtn.addEventListener('click', handleJump);
+
+    resetGame();
+  </script>
 </body>
 </html>
