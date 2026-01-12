@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- OGP設定 -->
   <meta property="og:title" content="さとうめいだいのホームページ">
   <meta property="og:description" content="めいだいと触れ合えるミニゲームやプロフィールなどを掲載しています。">
@@ -204,6 +205,47 @@
       100% { transform: translateY(-4px); }
     }
 
+    /* スマホ用レイアウト（幅600px以下） */
+      @media screen and (max-width: 600px) {
+
+    /* ページ全体をスマホ幅に合わせる */
+    .page-wrapper {
+     width: 100%;
+     border-left: none;
+     border-right: none;
+    }
+
+  /* 2カラムを1カラムにする */
+    .main-layout {
+     display: block;
+    }
+
+    .left-column,
+    .right-column {
+     display: block;
+     width: 100%;
+     border-right: none;
+     padding: 10px;
+    }
+
+  /* プロフィール画像をスマホ幅にフィット */
+    .profile-box .photo img {
+     width: 100%;
+     height: auto;
+    }
+
+  /* テーブルを横スクロール可能に */
+    .update-table {
+     display: block;
+     overflow-x: auto;
+     white-space: nowrap;
+    }
+
+  /* 文字サイズを少し大きく */
+    body {
+     font-size: 16px;
+    }
+}
   </style>
 </head>
 <body>
